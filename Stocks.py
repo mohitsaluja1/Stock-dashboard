@@ -16,16 +16,20 @@ try:
     revenue = soup.find(class_='QXDnM').text
     news = soup.find(class_='Yfwt5').text
     about = soup.find(class_='bLLb2d').text
+    dividend = soup.find('div', string="Dividend yield")
+    yield1 = dividend.find_next('div')
+    yield2 = yield1.find_next('div').text
 
     dict1 = {'Price':price,
             'Previous close':previous_close,
             'Revenue of company':revenue,
             'Latest News': news,
-            'Company Info': about
-
-    }
+            'Company Info': about,
+            'Dividend yield': yield2
+            
+ }
 
     df = pd.DataFrame(dict1,index=["Extracted data"]).T
     st.write(df)
 except:
-    st.write("Symbol doesn't exist")   
+    st.write("Symbol doesn't exist")  
